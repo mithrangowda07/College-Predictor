@@ -70,7 +70,7 @@ if df is not None:
                     st.warning("Please make valid selections for Category, College, and Branch.")
 
             # Show selected list
-            if st.button("Show the list"):
+            if st.button("Show the sorted list"):
                 if st.session_state["selected_colleges"]:
                     sorted_colleges = sorted(
                         st.session_state["selected_colleges"], key=lambda x: x[2]
