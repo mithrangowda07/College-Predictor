@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import datetime
 
 # Title for the Streamlit app
 st.title("KCET College Cutoff Viewer")
@@ -45,8 +46,10 @@ if df is not None:
 
             # Dropdowns for college and branch selection
             selected_college = st.selectbox("Select College", ["Select"] + sorted(df["College Name"].unique()))
-            if selected_college:
-                selected_branch = st.selectbox("Select Branch", ["Select"] + sorted(df[df["College Name"] == selected_college]["Branch"].unique()))
+            selected_branch = st.selectbox(
+                "Select Branch",
+                ["Select"] + (sorted(df[df["College Name"] == selected_college]["Branch"].unique()) if selected_college != "Select" else [])
+            )
 
             # Ensure valid selections before proceeding
             if st.button("Submit"):
@@ -62,7 +65,7 @@ if df is not None:
                             [selected_college, selected_branch, cutoff_rank]
                         )
                     else:
-                        st.error("No data available for the selected options.")
+                        st.error(f"No data available for {selected_college} in {selected_branch} under {selected_category}.")
                 else:
                     st.warning("Please make valid selections for Category, College, and Branch.")
 
@@ -81,10 +84,11 @@ if df is not None:
 
                     # Download button for CSV
                     csv = selected_df.to_csv(index=False).encode("utf-8")
+                    today = datetime.date.today().strftime("%Y-%m-%d")
                     st.download_button(
                         label="Download as CSV",
                         data=csv,
-                        file_name="selected_colleges.csv",
+                        file_name=f"selected_colleges_{today}.csv",
                         mime="text/csv"
                     )
                 else:
