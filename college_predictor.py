@@ -25,11 +25,11 @@ if df is not None:
     df.columns = df.columns.str.strip()
 
     # Dropdown for selecting app mode
-    app_mode = st.selectbox("Select an option", ["Sort the college"])
+    app_mode = st.selectbox("Select an option", ["--Select--","Sort the college"])
 
     if app_mode == "Sort the college":
         st.write("Choose **Start** to enter the college sorting or **End** to end the session.")
-        app_mode1 = st.selectbox("Select", ["Start", "End"])
+        app_mode1 = st.selectbox("Select", ["--Select--","Start", "End"])
 
         # Initialize session state variables
         if "selected_colleges" not in st.session_state:
@@ -42,18 +42,18 @@ if df is not None:
                 for col in df.columns
                 if col not in ["College Code", "College Name", "Branch", "Branch code", "Place"]
             ]
-            selected_category = st.selectbox("Select Category", ["Select"] + category_list)
+            selected_category = st.selectbox("Select Category", ["--Select--"] + category_list)
 
             # Dropdowns for college and branch selection
-            selected_college = st.selectbox("Select College", ["Select"] + sorted(df["College Name"].unique()))
+            selected_college = st.selectbox("Select College", ["--Select--"] + sorted(df["College Name"].unique()))
             selected_branch = st.selectbox(
                 "Select Branch",
-                ["Select"] + (sorted(df[df["College Name"] == selected_college]["Branch"].unique()) if selected_college != "Select" else [])
+                ["--Select--"] + (sorted(df[df["College Name"] == selected_college]["Branch"].unique()) if selected_college != "--Select--" else [])
             )
 
             # Ensure valid selections before proceeding
-            if st.button("Submit"):
-                if selected_category != "Select" and selected_college != "Select" and selected_branch != "Select":
+            if st.button("Add to list"):
+                if selected_category != "--Select--" and selected_college != "--Select--" and selected_branch != "--Select--":
                     # Filter data
                     filtered_data = df[
                         (df["College Name"] == selected_college) & (df["Branch"] == selected_branch)
