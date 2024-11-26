@@ -6,7 +6,7 @@ import datetime
 st.title("KCET College Cutoff Viewer")
 
 # Define the local file path for the Excel file
-FILE_PATH = "https://raw.githubusercontent.com/mithrangowda07/College-Predictor/main/cet_colg_data.xlsx"
+FILE_PATH = "https://raw.githubusercontent.com/mithrangowda07/College-Predictor/main/cet_colg_data1.xlsx"
 
 # Load the Excel file
 @st.cache_data
