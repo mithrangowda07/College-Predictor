@@ -60,6 +60,15 @@ if df is not None:
                     ]
                     if not filtered_data.empty:
                         cutoff_rank = filtered_data[selected_category].values[0]
+
+                        # Check if cutoff_rank is numeric
+                        if isinstance(cutoff_rank, (int, float)):  # Check if it's a number
+                            pass  # Value is valid, do nothing
+                        elif isinstance(cutoff_rank, str) and cutoff_rank.isnumeric():
+                            cutoff_rank = int(cutoff_rank)  # Convert numeric string to integer
+                        else:
+                            cutoff_rank = filtered_data["GM"].values[0]  # Fallback to "GM" column
+                            
                         st.success(f"Cutoff Rank: {cutoff_rank}")
                         st.session_state["selected_colleges"].append(
                             [selected_college, selected_branch, cutoff_rank]
